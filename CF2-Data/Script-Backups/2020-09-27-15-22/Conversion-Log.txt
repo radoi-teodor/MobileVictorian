@@ -1,0 +1,123 @@
+Converting script [1 / 12]	[\Dishonored\EffectExamples\Shared\Scripts\GunAim.cs]
+	Fragments : 2
+		[ 0] : Line:   21	InputProperty mousePosition       
+		[ 1] : Line:   22	InputProperty mousePosition       
+
+Converting script [2 / 12]	[\Dishonored\EffectExamples\Shared\Scripts\GunShoot.cs]
+	Fragments : 1
+		[ 0] : Line:   34	InputMethod   GetButtonDown       	("Fire1")
+
+Converting script [3 / 12]	[\Dishonored\Essentials\Dishonored\FPSController\MotionCore.cs]
+	Fragments : 26
+		[ 0] : Line:  426	InputMethod   GetMouseButton      	(2)
+		[ 1] : Line:  486	InputMethod   GetMouseButtonDown  	(2)
+		[ 2] : Line:  488	Other mod.	[Cursor.visible]
+		[ 3] : Line:  489	Other mod.	[Cursor.lockState]
+		[ 4] : Line:  513	InputMethod   GetMouseButtonUp    	(2)
+		[ 5] : Line:  513	InputMethod   GetKeyDown          	(GameManager.instance.pauseKey)
+		[ 6] : Line:  515	Other mod.	[Cursor.visible]
+		[ 7] : Line:  516	Other mod.	[Cursor.lockState]
+		[ 8] : Line:  526	InputProperty mousePosition       
+		[ 9] : Line:  533	InputMethod   GetMouseButtonDown  	(0)
+		[10] : Line:  538	InputMethod   GetMouseButtonDown  	(0)
+		[11] : Line:  576	InputMethod   GetMouseButton      	(1)
+		[12] : Line:  583	InputMethod   GetMouseButtonDown  	(1)
+		[13] : Line:  589	InputMethod   GetMouseButtonDown  	(1)
+		[14] : Line:  615	InputMethod   GetKeyDown          	(KeyCode.LeftControl)
+		[15] : Line:  622	InputMethod   GetKeyDown          	(KeyCode.Space)
+		[16] : Line:  640	InputMethod   GetKey              	(KeyCode.F)
+		[17] : Line:  662	InputMethod   GetKeyDown          	(KeyCode.C)
+		[18] : Line:  683	InputMethod   GetMouseButton      	(1)
+		[19] : Line:  692	InputMethod   GetMouseButtonUp    	(1)
+		[20] : Line:  707	InputMethod   GetAxis             	("Vertical")
+		[21] : Line:  708	InputMethod   GetKey              	(KeyCode.LeftShift)
+		[22] : Line:  723	InputMethod   GetKey              	(KeyCode.LeftShift)
+		[23] : Line:  795	InputMethod   GetKeyDown          	(KeyCode.F)
+		[24] : Line:  809	InputMethod   GetKeyDown          	(KeyCode.F)
+		[25] : Line: 1118	InputMethod   GetKey              	(KeyCode.Space)
+
+Converting script [4 / 12]	[\Dishonored\Essentials\Dishonored\FPSController\Skill\SkillUI.cs]
+	Fragments : 2
+		[ 0] : Line:   30	InputMethod   GetMouseButtonUp    	(2)
+		[ 1] : Line:   38	InputMethod   GetMouseButton      	(2)
+
+Converting script [5 / 12]	[\Dishonored\Essentials\Dishonored\General\GameManager.cs]
+	Fragments : 9
+		[ 0] : Line:  108	InputMethod   GetKeyDown          	(pauseKey)
+		[ 1] : Line:  125	Other mod.	[Cursor.visible]
+		[ 2] : Line:  126	Other mod.	[Cursor.lockState]
+		[ 3] : Line:  138	Other mod.	[Cursor.visible]
+		[ 4] : Line:  139	Other mod.	[Cursor.lockState]
+		[ 5] : Line:  201	Other mod.	[Cursor.visible]
+		[ 6] : Line:  202	Other mod.	[Cursor.lockState]
+		[ 7] : Line:  214	Other mod.	[Cursor.visible]
+		[ 8] : Line:  215	Other mod.	[Cursor.lockState]
+
+Converting script [6 / 12]	[\Dishonored\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs]
+	Fragments : 2
+		[ 0] : Line:   23	InputMethod   GetKey              	(KeyCode.UpArrow)
+		[ 1] : Line:   25	InputMethod   GetKey              	(KeyCode.DownArrow)
+
+Converting script [7 / 12]	[\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs]
+	Fragments : 4
+		[ 0] : Line:   68	InputMethod   GetButtonDown       	("Jump")
+		[ 1] : Line:  207	InputMethod   GetAxis             	("Horizontal")
+		[ 2] : Line:  208	InputMethod   GetAxis             	("Vertical")
+		[ 3] : Line:  215	InputMethod   GetKey              	(KeyCode.LeftShift)
+
+Converting script [8 / 12]	[\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs]
+	Fragments : 10
+		[ 0] : Line:   33	InputMethod   GetAxis             	("Mouse X")
+		[ 1] : Line:   34	InputMethod   GetAxis             	("Mouse Y")
+		[ 2] : Line:   63	Other mod.	[Cursor.lockState]
+		[ 3] : Line:   64	Other mod.	[Cursor.visible]
+		[ 4] : Line:   77	InputMethod   GetKeyUp            	(KeyCode.Escape)
+		[ 5] : Line:   81	InputMethod   GetMouseButtonUp    	(0)
+		[ 6] : Line:   88	Other mod.	[Cursor.lockState]
+		[ 7] : Line:   89	Other mod.	[Cursor.visible]
+		[ 8] : Line:   93	Other mod.	[Cursor.lockState]
+		[ 9] : Line:   94	Other mod.	[Cursor.visible]
+
+Converting script [9 / 12]	[\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\RigidbodyFirstPersonController.cs]
+	Fragments : 4
+		[ 0] : Line:   47	InputMethod   GetKey              	(RunKey)
+		[ 1] : Line:  133	InputMethod   GetButtonDown       	("Jump")
+		[ 2] : Line:  219	InputMethod   GetAxis             	("Horizontal")
+		[ 3] : Line:  220	InputMethod   GetAxis             	("Vertical")
+
+Converting script [10 / 12]	[\Dishonored\Standard Assets\Utility\DragRigidbody.cs]
+	Fragments : 5
+		[ 0] : Line:   22	InputMethod   GetMouseButtonDown  	(0)
+		[ 1] : Line:   32	InputProperty mousePosition       
+		[ 2] : Line:   33	InputProperty mousePosition       
+		[ 3] : Line:   71	InputMethod   GetMouseButton      	(0)
+		[ 4] : Line:   73	InputProperty mousePosition       
+
+Converting script [11 / 12]	[\Dishonored\Standard Assets\Utility\ForcedReset.cs]
+	Fragments : 1
+		[ 0] : Line:   12	InputMethod   GetButtonDown       	("ResetObject")
+
+Converting script [12 / 12]	[\Dishonored\Standard Assets\Utility\SimpleMouseRotator.cs]
+	Fragments : 4
+		[ 0] : Line:   48	InputMethod   GetAxis             	("Mouse X")
+		[ 1] : Line:   49	InputMethod   GetAxis             	("Mouse Y")
+		[ 2] : Line:   98	InputProperty mousePosition       
+		[ 3] : Line:   99	InputProperty mousePosition       
+
+
+12 scripts modified!
+Overwriting actual scripts...
+	[0 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\EffectExamples\Shared\Scripts\GunAim.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\EffectExamples\Shared\Scripts\GunAim.cs]
+	[1 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\EffectExamples\Shared\Scripts\GunShoot.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\EffectExamples\Shared\Scripts\GunShoot.cs]
+	[2 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Essentials\Dishonored\FPSController\MotionCore.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Essentials\Dishonored\FPSController\MotionCore.cs]
+	[3 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Essentials\Dishonored\FPSController\Skill\SkillUI.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Essentials\Dishonored\FPSController\Skill\SkillUI.cs]
+	[4 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Essentials\Dishonored\General\GameManager.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Essentials\Dishonored\General\GameManager.cs]
+	[5 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs]
+	[6 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs]
+	[7 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs]
+	[8 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\RigidbodyFirstPersonController.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Standard Assets\Characters\FirstPersonCharacter\Scripts\RigidbodyFirstPersonController.cs]
+	[9 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Standard Assets\Utility\DragRigidbody.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Standard Assets\Utility\DragRigidbody.cs]
+	[10 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Standard Assets\Utility\ForcedReset.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Standard Assets\Utility\ForcedReset.cs]
+	[11 / 12] from  [C:/Proiecte/Unity/DishonoredLikeAndroid/CF2-Data/Script-Backups/2020-09-27-15-22\Assets-After/\Dishonored\Standard Assets\Utility\SimpleMouseRotator.cs] to [C:/Proiecte/Unity/DishonoredLikeAndroid/Assets/\Dishonored\Standard Assets\Utility\SimpleMouseRotator.cs]
+
+Overwriting COMPLETED!

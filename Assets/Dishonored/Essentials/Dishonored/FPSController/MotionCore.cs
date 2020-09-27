@@ -71,6 +71,7 @@ public class MotionCore : MonoBehaviour {
     [Space]
     public Animator menuAnim;
     public GameObject selectorCursor;
+    public RectTransform skillCircle;
     public Text skillTX;
     [Space]
     public GameObject skillHolder;
@@ -94,6 +95,11 @@ public class MotionCore : MonoBehaviour {
     public RectTransform chatPanTransform;
     public RectTransform usePanTransform;
 
+    [Space]
+    [Header("Mobile UI")]
+    public GameObject useButton;
+    public List<GameObject> hideWhenAbilityMenuShown = new List<GameObject>();
+
     /// <summary>
     /// Private variables
     /// </summary>
@@ -106,7 +112,7 @@ public class MotionCore : MonoBehaviour {
     bool velocityTook = false, velocityUsed = false;
 
     float holdF = 0, airTime = 0, blockTimer = 0;
-    //[HideInInspector]
+    [HideInInspector]
     public float health = 100, mana = 100;
     float manaFuture = 100;
 
@@ -423,7 +429,27 @@ public class MotionCore : MonoBehaviour {
         bloodScreenImg.color = Color.Lerp(bloodScreenImg.color, new Color(1, 1, 1, 0), Time.unscaledDeltaTime);
         acrobaticsCamera.transform.localPosition = bobCam.transform.localPosition;
 
-        menuShown = Input.GetMouseButton(2);
+        menuShown = ControlFreak2.CF2Input.GetMouseButton(2);
+
+
+        // MOBILE CONTROLS
+        
+        if (ControlFreak2.CF2Input.GetMouseButtonDown(2)) {
+            foreach (GameObject item in hideWhenAbilityMenuShown)
+            {
+                item.SetActive(false);
+            }
+        }
+        else if(ControlFreak2.CF2Input.GetMouseButtonUp(2)) {
+            foreach (GameObject item in hideWhenAbilityMenuShown)
+            {
+                item.SetActive(true);
+            }
+        }
+        
+        // MOBILE CONTROLS
+
+
 
         if (!menuShown)
         {
@@ -483,10 +509,10 @@ public class MotionCore : MonoBehaviour {
 
         menuAnim.SetBool("Shown", menuShown);
 
-        if (Input.GetMouseButtonDown(2))
+        if (ControlFreak2.CF2Input.GetMouseButtonDown(2))
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            ControlFreak2.CFCursor.visible = true;
+            ControlFreak2.CFCursor.lockState = CursorLockMode.None;
 
             controllerWasEnabled = controller.enabled;
             controller.enabled = false;
@@ -510,10 +536,10 @@ public class MotionCore : MonoBehaviour {
             skillTX.text = skillEquipped!=""?skillEquipped:"None";
         }
 
-        if (Input.GetMouseButtonUp(2) || (!GameManager.instance.paused && Input.GetKeyDown(GameManager.instance.pauseKey)))
+        if (ControlFreak2.CF2Input.GetMouseButtonUp(2) || (!GameManager.instance.paused && ControlFreak2.CF2Input.GetKeyDown(GameManager.instance.pauseKey)))
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            ControlFreak2.CFCursor.visible = false;
+            ControlFreak2.CFCursor.lockState = CursorLockMode.Locked;
 
             controller.enabled = controllerWasEnabled;
 
@@ -523,19 +549,29 @@ public class MotionCore : MonoBehaviour {
 
         if (menuShown)
         {
-            Vector2 dir = Input.mousePosition - new Vector3(Screen.width/2, Screen.height/2);
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            selectorCursor.transform.rotation = Quaternion.Lerp(selectorCursor.transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.unscaledDeltaTime * 12);
+            Vector3 mousePosition = Input.mousePosition;
+            print(skillCircle.sizeDelta);
+            if (
+                mousePosition.x > Screen.width / 2 - skillCircle.rect.width/2 &&
+                mousePosition.x < Screen.width / 2 + skillCircle.rect.width / 2 &&
+                mousePosition.y > Screen.height / 2 - skillCircle.rect.height / 2 &&
+                mousePosition.y < Screen.height / 2 + skillCircle.rect.height / 2
+                )
+            {
+                Vector2 dir = mousePosition - new Vector3(Screen.width / 2, Screen.height / 2);
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                selectorCursor.transform.rotation = Quaternion.Lerp(selectorCursor.transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.unscaledDeltaTime * 12);
+            }
         }
 
         if (!hurt)
         {
-            if (Input.GetMouseButtonDown(0) && !rightEquiped && hasSword)
+            if (ControlFreak2.CF2Input.GetMouseButtonDown(0) && !rightEquiped && hasSword)
             {
                 rightEquiped = true;
                 handsCharAnim.SetBool("RightEquiped", true);
             }
-            else if (Input.GetMouseButtonDown(0) && rightEquiped)
+            else if (ControlFreak2.CF2Input.GetMouseButtonDown(0) && rightEquiped)
             {
                 Collider[] cols = Physics.OverlapSphere(transform.position + transform.up + transform.forward * 2f, 1.5f);
 
@@ -573,20 +609,20 @@ public class MotionCore : MonoBehaviour {
 
         handsCharAnim.SetBool("IsGun", skillEquipped == "Gun" || skillEquipped == "Crossbow");
 
-        if(skillCooldown >= 0 && !Input.GetMouseButton(1))
+        if(skillCooldown >= 0 && !ControlFreak2.CF2Input.GetMouseButton(1))
         {
             skillCooldown -= deltaTime;
         }
 
         if (!hurt)
         {
-            if (Input.GetMouseButtonDown(1) && !leftEquiped && (hasGun || (skillEquipped != "Gun" && activeSkill)))
+            if (ControlFreak2.CF2Input.GetMouseButtonDown(1) && !leftEquiped && (hasGun || (skillEquipped != "Gun" && activeSkill)))
             {
                 leftEquiped = true;
 
                 handsCharAnim.SetBool("LeftEquiped", true);
             }
-            else if (Input.GetMouseButtonDown(1) && leftEquiped)
+            else if (ControlFreak2.CF2Input.GetMouseButtonDown(1) && leftEquiped)
             {
                 if ((skillEquipped == "Gun" && gunWeapon.bullets > 0) || (skillCooldown <= 0 && (skillEquipped != "Gun" && skillEquipped != "Crossbow") && activeSkill && mana - activeSkill.manaCost >= 0) || (skillEquipped == "Crossbow" && crossbowWeapon.bullets > 0))
                 {
@@ -612,14 +648,14 @@ public class MotionCore : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && rightEquiped)
+        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.LeftControl) && rightEquiped)
         {
             blockTimer = 0;
             blockTimer += deltaTime;
             handsCharAnim.SetBool("RightBlock", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.Space))
         {
             jumped = true;
         }
@@ -637,7 +673,7 @@ public class MotionCore : MonoBehaviour {
             blockTimer = 0;
         }
 
-        if ((leftEquiped || rightEquiped) && Input.GetKey(KeyCode.F) && !hurt)
+        if ((leftEquiped || rightEquiped) && ControlFreak2.CF2Input.GetKey(KeyCode.F) && !hurt)
         {
             holdF += deltaTime;
         }
@@ -659,7 +695,7 @@ public class MotionCore : MonoBehaviour {
             holdF = 0f;
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && !hurt)
+        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.C) && !hurt)
         {
             crouched = !crouched;
             CrouchSet();
@@ -680,7 +716,7 @@ public class MotionCore : MonoBehaviour {
 
                 if (skillCooldown <= 0)
                 {
-                    bool isHolding = Input.GetMouseButton(1);
+                    bool isHolding = ControlFreak2.CF2Input.GetMouseButton(1);
 
                     handsCharAnim.SetBool("LeftAttack", isHolding);
 
@@ -689,7 +725,7 @@ public class MotionCore : MonoBehaviour {
                         activeSkill.LoopSkill();
                     }
 
-                    if (Input.GetMouseButtonUp(1))
+                    if (ControlFreak2.CF2Input.GetMouseButtonUp(1))
                     {
                         activeSkill.ActivateSkill();
 
@@ -704,8 +740,8 @@ public class MotionCore : MonoBehaviour {
             }
         }
 
-        handsCharAnim.SetFloat("Move", Input.GetAxis("Vertical"));
-        handsCharAnim.SetBool("Running", Input.GetKey(KeyCode.LeftShift));
+        handsCharAnim.SetFloat("Move", ControlFreak2.CF2Input.GetAxis("Vertical"));
+        handsCharAnim.SetBool("Running", ControlFreak2.CF2Input.GetKey(KeyCode.LeftShift));
         handsCharAnim.SetBool("Crouched", crouched);
 
         if (crouched)
@@ -720,7 +756,7 @@ public class MotionCore : MonoBehaviour {
                 bobCam.transform.localPosition = Vector3.Lerp(bobCam.transform.localPosition, new Vector3(bobCam.transform.localPosition.x, .1f, bobCam.transform.localPosition.z), Time.deltaTime * 3);
             }
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (ControlFreak2.CF2Input.GetKey(KeyCode.LeftShift))
             {
                 crouched = false;
                 CrouchSet();
@@ -770,12 +806,17 @@ public class MotionCore : MonoBehaviour {
             return;
         }
 
+        bool useButtonActive = false;
+
         RaycastHit hit;
         if (Physics.Raycast(bobCamComp.ViewportPointToRay(new Vector3(.5f, .5f, 0)), out hit, 3.5f))
         {
+
+
             if (hit.collider.tag == "Trigger")
             {
-                if(lastSelectedObject && hit.collider.gameObject != lastSelectedObject)
+                useButtonActive = true;
+                if (lastSelectedObject && hit.collider.gameObject != lastSelectedObject)
                 {
                     lastSelectedObject.SendMessage("SetFresnel", 0f);
                 }
@@ -792,12 +833,15 @@ public class MotionCore : MonoBehaviour {
 
                 hit.collider.SendMessage("SetFresnel", .1f);
 
-                if (Input.GetKeyDown(KeyCode.F))
+                if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.F))
                 {
                     hit.collider.SendMessage("TriggerSystem", gameObject);
                 }
+
             }else if(hit.collider.tag == "AI")
             {
+                useButtonActive = true;
+
                 chatPanTransform.gameObject.SetActive(true);
 
                 Vector2 crossPos = bobCamComp.WorldToViewportPoint(hit.collider.transform.position);
@@ -806,7 +850,7 @@ public class MotionCore : MonoBehaviour {
 
                 chatPanTransform.anchoredPosition = new Vector2(x,y);
 
-                if (Input.GetKeyDown(KeyCode.F))
+                if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.F))
                 {
                     BaseAI talkAI = hit.collider.gameObject.GetComponent<BaseAI>();
 
@@ -846,6 +890,7 @@ public class MotionCore : MonoBehaviour {
                 lastSelectedObject.SendMessage("SetFresnel", 0f, SendMessageOptions.DontRequireReceiver);
             }
         }
+        useButton.SetActive(useButtonActive);
 
         mana = Mathf.Lerp(mana, manaFuture, Time.deltaTime / 5);
     }
@@ -1115,7 +1160,7 @@ public class MotionCore : MonoBehaviour {
     {
         if(other.tag == "Wall")
         {
-            if((jumped || Input.GetKey(KeyCode.Space)) && !climbing)
+            if((jumped || ControlFreak2.CF2Input.GetKey(KeyCode.Space)) && !climbing)
             {
                 rb.isKinematic = true;
                 rb.useGravity = false;
