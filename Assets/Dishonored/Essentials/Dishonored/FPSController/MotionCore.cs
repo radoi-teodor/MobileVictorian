@@ -73,6 +73,7 @@ public class MotionCore : MonoBehaviour {
     public GameObject selectorCursor;
     public RectTransform skillCircle;
     public Text skillTX;
+    public GameObject controlsRig;
     [Space]
     public GameObject skillHolder;
     public RectTransform skillPrefab;
@@ -208,6 +209,7 @@ public class MotionCore : MonoBehaviour {
         skillCount = skills.Count;
 
         RefreshSkills();
+
     }
 
     void RefreshSkills()
@@ -305,7 +307,8 @@ public class MotionCore : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-
+        controlsRig.SetActive(!GameManager.instance.paused);
+       
         deltaTime = Time.deltaTime * GameManager.instance.MasterTimeScale;
 
         handsCharAnim.speed = GameManager.instance.MasterTimeScale;

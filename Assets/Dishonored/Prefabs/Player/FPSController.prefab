@@ -15043,6 +15043,7 @@ MonoBehaviour:
   selectorCursor: {fileID: 8160317924402976482}
   skillCircle: {fileID: 8225173563426498922}
   skillTX: {fileID: 8119430210396600016}
+  controlsRig: {fileID: 8159222583728520002}
   skillHolder: {fileID: 8159995773462120620}
   skillPrefab: {fileID: 224645890869615344, guid: 8a8bba52b25352c40b5c78f33ff9b0c7,
     type: 3}
