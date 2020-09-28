@@ -121,10 +121,11 @@ public class BaseAI : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        MakeNormal();
 
         skinnedMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
         mesh = GetComponentsInChildren<MeshRenderer>();
+
+        MakeNormal();
 
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();

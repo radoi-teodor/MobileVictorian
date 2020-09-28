@@ -553,7 +553,7 @@ public class MotionCore : MonoBehaviour {
         if (menuShown)
         {
             Vector3 mousePosition = Input.mousePosition;
-            print(skillCircle.sizeDelta);
+
             if (
                 mousePosition.x > Screen.width / 2 - skillCircle.rect.width/2 &&
                 mousePosition.x < Screen.width / 2 + skillCircle.rect.width / 2 &&
