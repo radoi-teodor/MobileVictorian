@@ -162,6 +162,7 @@ public class MotionCore : MonoBehaviour {
     float timeScale = 1, masterTimeScale = 1;
 
     bool dead = false;
+    bool hasBeenInAir = true;
 
     // Use this for initialization
     void Start () {
@@ -661,13 +662,20 @@ public class MotionCore : MonoBehaviour {
             handsCharAnim.SetBool("RightBlock", true);
         }
 
-        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.Space))
+        if (ControlFreak2.CF2Input.GetAxis("Jump")>0)
         {
-            jumped = true;
+            jumped = controller.Grounded;
+            hasBeenInAir = false;
         }
 
-        if (controller.Grounded)
+        if(!hasBeenInAir && !controller.Grounded)
         {
+            hasBeenInAir = true;
+        }
+
+        if (controller.Grounded && hasBeenInAir)
+        {
+            hasBeenInAir = false;
             jumped = false;
         }
 
@@ -684,7 +692,7 @@ public class MotionCore : MonoBehaviour {
             holdF += deltaTime;
         }
 
-        if (holdF > .75f)
+        if (holdF > .75f || ControlFreak2.CF2Input.GetKeyDown(KeyCode.X))
         {
             if (rightEquiped)
             {
@@ -1170,6 +1178,8 @@ public class MotionCore : MonoBehaviour {
                 acrobaticsPivot.SetActive(true);
                 bobCam.SetActive(false);
                 anim.SetTrigger("Climb");
+                hasBeenInAir = false;
+                jumped = false;
             }
         }
     }
