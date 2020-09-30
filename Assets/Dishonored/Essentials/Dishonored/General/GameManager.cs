@@ -54,6 +54,11 @@ public class GameManager : MonoBehaviour {
     public Image pausePan;
     public Animator pauseAnim;
 
+    [Space]
+    [Space]
+    [Header("Gameplay")]
+    public Material ditherMaterial;
+
     /// <summary>
     /// Pricate variables and components
     /// </summary>
@@ -86,6 +91,11 @@ public class GameManager : MonoBehaviour {
         subtitleTX.gameObject.SetActive(false);
 
         playerCore = FindObjectOfType<MotionCore>();
+    }
+
+    private void Start()
+    {
+        ditherMaterial.SetFloat("Vector1_6D76C118", 1);
     }
 
     // Update is called once per frame
@@ -290,6 +300,59 @@ public class GameManager : MonoBehaviour {
     {
         pausePan.material.SetFloat("_Size", value);
     }
+
+    public void MakeXRAY()
+    {
+        StartCoroutine(MakeXRayCor());
+    }
+
+    public void MakeNormal()
+    {
+        StartCoroutine(MakeNormalCor());
+    }
+
+    IEnumerator MakeNormalCor()
+    {
+        while (ditherMaterial.GetFloat("Vector1_6D76C118") > .05)
+        {
+
+            if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+            {
+                float a = ditherMaterial.GetFloat("Vector1_6D76C118");
+                ditherMaterial.SetFloat("Vector1_6D76C118", Mathf.Lerp(a, 0, Time.deltaTime * 3));
+            }
+
+            yield return null;
+        }
+
+
+        if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+        {
+            ditherMaterial.SetFloat("Vector1_6D76C118", 1);
+        }
+    }
+
+    IEnumerator MakeXRayCor()
+    {
+        while (ditherMaterial.GetFloat("Vector1_6D76C118") < .95)
+        {
+
+            if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+            {
+                float a = ditherMaterial.GetFloat("Vector1_6D76C118");
+                ditherMaterial.SetFloat("Vector1_6D76C118", Mathf.Lerp(a, 1, Time.deltaTime * 3));
+            }
+
+            yield return null;
+        }
+
+
+        if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+        {
+            ditherMaterial.SetFloat("Vector1_6D76C118", 0);
+        }
+    }
+
 
     IEnumerator LoadCor(string level)
     {

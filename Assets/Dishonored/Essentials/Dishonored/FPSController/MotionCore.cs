@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.PostProcessing;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class MotionCore : MonoBehaviour {
 
@@ -135,12 +137,12 @@ public class MotionCore : MonoBehaviour {
     [HideInInspector]
     public RigidbodyFirstPersonController controller;
 
-    PostProcessingBehaviour postProcess;
+    Volume postProcess;
     GameObject bobCam;
     WeaponCore gunWeapon, swordWeapon, crossbowWeapon;
 
-    VignetteModel vignette;
-    ColorGradingModel colorGrading;
+    Vignette vignette;
+    ColorAdjustments colorGrading;
 
     [HideInInspector]
     public Camera bobCamComp;
@@ -170,9 +172,10 @@ public class MotionCore : MonoBehaviour {
         controller = GetComponent<RigidbodyFirstPersonController>();
         bobCam = controller.cam.gameObject;
         bobCamComp = controller.cam;
-        postProcess = controller.cam.GetComponent<PostProcessingBehaviour>();
-        vignette = postProcess.profile.vignette;
-        colorGrading = postProcess.profile.colorGrading;
+        postProcess = controller.cam.GetComponent<Volume>();
+
+        postProcess.profile.TryGet<Vignette>(out vignette);
+        postProcess.profile.TryGet<ColorAdjustments>(out colorGrading);
 
         gunWeapon = gun.GetComponent<WeaponCore>();
         swordWeapon = sword.GetComponent<WeaponCore>();
@@ -201,7 +204,7 @@ public class MotionCore : MonoBehaviour {
         healthProgress.max = health;
         manaProgress.max = mana;
 
-        SetSaturation(1);
+        SetSaturation(0);
 
         hasGunMemory = hasGun;
         hasSwordMemory = hasSword;
@@ -834,7 +837,7 @@ public class MotionCore : MonoBehaviour {
 
                 lastSelectedObject = hit.collider.gameObject;
 
-                hit.collider.SendMessage("SetFresnel", .1f);
+                hit.collider.SendMessage("SetFresnel", 80f);
 
                 if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.F))
                 {
@@ -923,26 +926,22 @@ public class MotionCore : MonoBehaviour {
 
     void SetVignette(float amount)
     {
-        VignetteModel.Settings set = vignette.settings;
-        set.intensity = amount;
-        vignette.settings = set;
+        vignette.intensity.value = amount;
     }
 
     float GetVignette()
     {
-        return vignette.settings.intensity;
+        return vignette.intensity.value;
     }
 
     public void SetSaturation(float amount)
     {
-        ColorGradingModel.Settings set = colorGrading.settings;
-        set.basic.saturation = amount;
-        colorGrading.settings = set;
+        colorGrading.saturation.value = amount;
     }
 
     public float GetSaturation()
     {
-        return colorGrading.settings.basic.saturation;
+        return colorGrading.saturation.value;
     }
 
     public void RightTogFunc() {

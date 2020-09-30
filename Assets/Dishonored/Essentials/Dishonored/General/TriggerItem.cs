@@ -37,6 +37,8 @@ public class TriggerItem : MonoBehaviour {
 
         meshRenderer = GetComponent<MeshRenderer>();
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+
+        SetFresnel(0);
     }
 
     private void Update()
@@ -77,11 +79,11 @@ public class TriggerItem : MonoBehaviour {
     {
         if (meshRenderer)
         {
-            return meshRenderer.material.GetFloat("_Shininess");
+            return meshRenderer.material.GetFloat("Vector1_1730EF8B");
         }
         else
         {
-            return skinnedMeshRenderer.material.GetFloat("_Shininess");
+            return skinnedMeshRenderer.material.GetFloat("Vector1_1730EF8B");
         }
     }
 
@@ -89,11 +91,11 @@ public class TriggerItem : MonoBehaviour {
     {
         if (meshRenderer)
         {
-            meshRenderer.material.SetFloat("_Shininess", value);
+            meshRenderer.material.SetFloat("Vector1_1730EF8B", value);
         }
         else
         {
-            skinnedMeshRenderer.material.SetFloat("_Shininess", value);
+            skinnedMeshRenderer.material.SetFloat("Vector1_1730EF8B", value);
         }
 
     }

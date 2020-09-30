@@ -1,0 +1,10 @@
+TAGS:
+GameController
+CursorUI
+Wall
+Trigger
+AI
+
+LAYERS:
+Hands
+AI

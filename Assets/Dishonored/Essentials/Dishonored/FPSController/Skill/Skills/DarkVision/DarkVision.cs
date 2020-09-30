@@ -33,24 +33,16 @@ public class DarkVision : SkillBase {
     {
         inEffect = true;
 
-        baisGL = FindObjectsOfType<BaseAI>();
 
-        foreach (BaseAI bai in baisGL)
-        {
-            bai.MakeXRAY();
-        }
+        GameManager.instance.MakeXRAY();
 
         yield return new WaitForSeconds(duration + (isUpgraded?5:0));
 
         owner.audioGeneral.PlayAudio(endAudio);
 
-        foreach (BaseAI bai in baisGL)
-        {
-            if (bai)
-            {
-                bai.MakeNormal();
-            }
-        }
+
+        GameManager.instance.MakeNormal();
+
 
         inEffect = false;
     }
@@ -61,18 +53,12 @@ public class DarkVision : SkillBase {
 
         yield return new WaitForSeconds(1f);
 
-        foreach (BaseAI bai in baisGL)
-        {
-            if (bai)
-            {
-                bai.MakeNormal();
-            }
-        }
+
+        GameManager.instance.MakeNormal();
 
         yield return new WaitForSeconds(1f);
 
         inEffect = false;
-
 
     }
 }

@@ -86,9 +86,6 @@ public class BaseAI : MonoBehaviour {
 
     float deltaTime;
 
-    SkinnedMeshRenderer[] skinnedMesh;
-    MeshRenderer[] mesh;
-
     AudioSourceEssentials audioEssentials;
 
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
@@ -121,11 +118,8 @@ public class BaseAI : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        gameObject.layer = 10;
 
-        skinnedMesh = GetComponentsInChildren<SkinnedMeshRenderer>();
-        mesh = GetComponentsInChildren<MeshRenderer>();
-
-        MakeNormal();
 
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -555,144 +549,6 @@ public class BaseAI : MonoBehaviour {
         }
 
         return rd;
-    }
-
-    public void MakeXRAY()
-    {
-        StartCoroutine(MakeXRayCor());
-    }
-
-    public void MakeNormal()
-    {
-        StartCoroutine(MakeNormalCor());
-    }
-
-    IEnumerator MakeXRayCor()
-    {
-        if(mesh.Length > 0)
-        {
-            while(mesh[0].sharedMaterials[0].GetColor("_OutlineColor").a < .95)
-            {
-                foreach(MeshRenderer m in mesh)
-                {
-                    foreach (Material mat in m.sharedMaterials)
-                    {
-                        if(mat.HasProperty("_OutlineColor")) {
-                            Color c = mat.GetColor("_OutlineColor");
-                            mat.SetColor("_OutlineColor", Color.Lerp(c, new Color(c.r, c.g, c.b, 1), Time.deltaTime * 3));
-
-                        }
-
-                    }
-                }
-                yield return null;
-            }
-
-            foreach (MeshRenderer m in mesh)
-            {
-                foreach (Material mat in m.sharedMaterials)
-                {
-                    if (mat.HasProperty("_OutlineColor"))
-                    {
-                        Color c = mat.GetColor("_OutlineColor");
-                        mat.SetColor("_OutlineColor", new Color(c.r, c.g, c.b, 1));
-                    }
-                }
-            }
-        }
-        else if (skinnedMesh.Length > 0)
-        {
-            while (skinnedMesh[0].sharedMaterials[0].GetColor("_OutlineColor").a < .95)
-            {
-                foreach (SkinnedMeshRenderer m in skinnedMesh)
-                {
-                    foreach (Material mat in m.sharedMaterials)
-                    {
-                        if(mat.HasProperty("_OutlineColor")) {
-                            Color c = mat.GetColor("_OutlineColor");
-                            mat.SetColor("_OutlineColor", Color.Lerp(c, new Color(c.r, c.g, c.b, 1), Time.deltaTime * 3));
-                        }
-                    }
-                }
-                yield return null;
-            }
-
-            foreach (SkinnedMeshRenderer m in skinnedMesh)
-            {
-                foreach (Material mat in m.sharedMaterials)
-                {
-                    if (mat.HasProperty("_OutlineColor"))
-                    {
-                        Color c = mat.GetColor("_OutlineColor");
-                        mat.SetColor("_OutlineColor", new Color(c.r, c.g, c.b, 1));
-                    }
-                }
-            }
-        }
-    }
-
-    IEnumerator MakeNormalCor()
-    {
-        if (mesh != null && mesh.Length > 0)
-        {
-            while (mesh[0].sharedMaterials[0].GetColor("_OutlineColor").a > 0f)
-            {
-                foreach (MeshRenderer m in mesh)
-                {
-                    foreach (Material mat in m.sharedMaterials)
-                    {
-                        if(mat.HasProperty("_OutlineColor"))
-                        {
-                            Color c = mat.GetColor("_OutlineColor");
-                            mat.SetColor("_OutlineColor", Color.Lerp(c, new Color(c.r, c.g, c.b, -0.1f), Time.deltaTime * 3));
-                        }
-                    }
-                }
-                yield return null;
-            }
-
-            foreach (MeshRenderer m in mesh)
-            {
-                foreach (Material mat in m.sharedMaterials)
-                {
-                    if (mat.HasProperty("_OutlineColor"))
-                    {
-                        Color c = mat.GetColor("_OutlineColor");
-                        mat.SetColor("_OutlineColor", new Color(c.r, c.g, c.b, 0f));
-                    }
-                }
-            }
-        }
-        else if (skinnedMesh != null && skinnedMesh.Length > 0)
-        {
-            while (skinnedMesh[0].sharedMaterials[0].GetColor("_OutlineColor").a > 0f)
-            {
-                foreach (SkinnedMeshRenderer m in skinnedMesh)
-                {
-                    foreach (Material mat in m.sharedMaterials)
-                    {
-                        if(mat.HasProperty("_OutlineColor"))
-                        {
-                            Color c = mat.GetColor("_OutlineColor");
-                            mat.SetColor("_OutlineColor", Color.Lerp(c, new Color(c.r, c.g, c.b, -0.1f), Time.deltaTime * 3));
-                        }
-                    }
-                }
-                yield return null;
-            }
-
-            foreach (SkinnedMeshRenderer m in skinnedMesh)
-            {
-                foreach (Material mat in m.sharedMaterials)
-                {
-                    if (mat.HasProperty("_OutlineColor"))
-                    {
-                        Color c = mat.GetColor("_OutlineColor");
-                        mat.SetColor("_OutlineColor", new Color(c.r, c.g, c.b, 0f));
-                    }
-                }
-            }
-        }
     }
 
     public void PublicSetTalkLowChaos(string subs)

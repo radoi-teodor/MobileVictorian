@@ -12,6 +12,7 @@ public class TimeManipulation : SkillBase
     bool inEffect = false;
 
     float speed;
+    IEnumerator startedCor;
 
     private void Awake()
     {
@@ -23,12 +24,12 @@ public class TimeManipulation : SkillBase
         if (!inEffect)
         {
             base.ActivateSkill();
-
-            StartCoroutine(stopTime());
+            startedCor = stopTime();
+            StartCoroutine(startedCor);
         }
         else
         {
-            StopCoroutine(stopTime());
+            StopCoroutine(startedCor);
             StartCoroutine(startTime());
         }
     }
@@ -44,14 +45,14 @@ public class TimeManipulation : SkillBase
             while (GameManager.instance.TimeScale > -0.05f)
             {
                 GameManager.instance.TimeScale = Mathf.Lerp(GameManager.instance.TimeScale, -.1f, speed);
-                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 0, speed));
+                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), -100, speed));
                 GameManager.instance.deltaTimeScale = -speed;
                 yield return null;
             }
             GameManager.instance.TimeScale = Mathf.Clamp(GameManager.instance.TimeScale, 0, Mathf.Infinity);
 
             GameManager.instance.TimeScale = 0f;
-            owner.SetSaturation(0);
+            owner.SetSaturation(-100);
             GameManager.instance.deltaTimeScale = 0;
 
             float t = duration;
@@ -65,14 +66,14 @@ public class TimeManipulation : SkillBase
             while (GameManager.instance.TimeScale <= 1)
             {
                 GameManager.instance.TimeScale = Mathf.Lerp(GameManager.instance.TimeScale, 1.1f, speed);
-                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 1, speed));
+                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 0, speed));
                 GameManager.instance.deltaTimeScale = speed;
 
                 yield return null;
             }
 
             GameManager.instance.TimeScale = 1f;
-            owner.SetSaturation(1);
+            owner.SetSaturation(0);
 
         }
         else
@@ -82,13 +83,13 @@ public class TimeManipulation : SkillBase
             while (GameManager.instance.TimeScale > 0.55)
             {
                 GameManager.instance.TimeScale = Mathf.Lerp(GameManager.instance.TimeScale, .5f, speed);
-                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 0, speed));
+                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), -100, speed));
                 GameManager.instance.deltaTimeScale = -speed;
                 yield return null;
             }
 
             GameManager.instance.TimeScale = .5f;
-            owner.SetSaturation(0);
+            owner.SetSaturation(-100);
 
             GameManager.instance.deltaTimeScale = 0;
 
@@ -103,14 +104,14 @@ public class TimeManipulation : SkillBase
             while (Time.timeScale <= 1)
             {
                 GameManager.instance.TimeScale = Mathf.Lerp(GameManager.instance.TimeScale, 1.1f, speed);
-                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 1, speed));
+                owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 0, speed));
                 GameManager.instance.deltaTimeScale = speed;
 
                 yield return null;
             }
 
             GameManager.instance.TimeScale = 1f;
-            owner.SetSaturation(1);
+            owner.SetSaturation(0);
 
         }
 
@@ -127,14 +128,14 @@ public class TimeManipulation : SkillBase
         while (GameManager.instance.TimeScale <= 1)
         {
             GameManager.instance.TimeScale = Mathf.Lerp(GameManager.instance.TimeScale, 1.1f, speed);
-            owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 1, speed));
+            owner.SetSaturation(Mathf.Lerp(owner.GetSaturation(), 0, speed));
             GameManager.instance.deltaTimeScale = speed;
 
             yield return null;
         }
 
         GameManager.instance.TimeScale = 1f;
-        owner.SetSaturation(1);
+        owner.SetSaturation(0);
 
         GameManager.instance.deltaTimeScale = 0;
 
