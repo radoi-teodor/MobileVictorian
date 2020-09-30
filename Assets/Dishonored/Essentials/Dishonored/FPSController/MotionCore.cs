@@ -1033,20 +1033,22 @@ public class MotionCore : MonoBehaviour {
             assasinateBody.layer = 9;
             assasinateBody.transform.parent = gun.transform.parent;
 
-            assasinateBody.transform.localPosition = -transform.up + transform.forward * .75f + transform.right * .25f;
+            assasinateBody.transform.localPosition = transform.forward * .75f + transform.right * .25f;
+
         }
     }
 
     public void DetachBodyFunc()
     {
+        
         if (assasinateBody)
         {
-            assasinateBody.transform.parent = null;
+            assasinateBody.transform.SetParent(null);
             assasinateBody.layer = 0;
         }
 
         assasinateBody = null;
-
+        
     }
 
     public void ResetAssasianteFunc()

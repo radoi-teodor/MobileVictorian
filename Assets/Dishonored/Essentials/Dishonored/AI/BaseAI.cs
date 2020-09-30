@@ -533,7 +533,7 @@ public class BaseAI : MonoBehaviour {
     public GameObject Assasinate()
     {
         dead = true;
-        worldCanvas.transform.parent = null;
+        worldCanvas.transform.SetParent(null);
         worldCanvas.SetBool("Triggered", true);
         worldCanvas.SetBool("Alarmed", true);
         Destroy(worldCanvas.gameObject, 5f);

@@ -79,11 +79,11 @@ public class TriggerItem : MonoBehaviour {
     {
         if (meshRenderer)
         {
-            return meshRenderer.material.GetFloat("Vector1_1730EF8B");
+            return meshRenderer.material.GetFloat("_Intensity");
         }
         else
         {
-            return skinnedMeshRenderer.material.GetFloat("Vector1_1730EF8B");
+            return skinnedMeshRenderer.material.GetFloat("_Intensity");
         }
     }
 
@@ -91,11 +91,11 @@ public class TriggerItem : MonoBehaviour {
     {
         if (meshRenderer)
         {
-            meshRenderer.material.SetFloat("Vector1_1730EF8B", value);
+            meshRenderer.material.SetFloat("_Intensity", value);
         }
         else
         {
-            skinnedMeshRenderer.material.SetFloat("Vector1_1730EF8B", value);
+            skinnedMeshRenderer.material.SetFloat("_Intensity", value);
         }
 
     }

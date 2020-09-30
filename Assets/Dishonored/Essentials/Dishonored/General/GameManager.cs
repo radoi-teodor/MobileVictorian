@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        ditherMaterial.SetFloat("Vector1_6D76C118", 1);
+        ditherMaterial.SetFloat("_AlphaTreshold", 1);
     }
 
     // Update is called once per frame
@@ -313,43 +313,43 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator MakeNormalCor()
     {
-        while (ditherMaterial.GetFloat("Vector1_6D76C118") > .05)
+        while (ditherMaterial.GetFloat("_AlphaTreshold") > .05)
         {
 
-            if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+            if (ditherMaterial.HasProperty("_AlphaTreshold"))
             {
-                float a = ditherMaterial.GetFloat("Vector1_6D76C118");
-                ditherMaterial.SetFloat("Vector1_6D76C118", Mathf.Lerp(a, 0, Time.deltaTime * 3));
+                float a = ditherMaterial.GetFloat("_AlphaTreshold");
+                ditherMaterial.SetFloat("_AlphaTreshold", Mathf.Lerp(a, 0, Time.deltaTime * 3));
             }
 
             yield return null;
         }
 
 
-        if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+        if (ditherMaterial.HasProperty("_AlphaTreshold"))
         {
-            ditherMaterial.SetFloat("Vector1_6D76C118", 1);
+            ditherMaterial.SetFloat("_AlphaTreshold", 1);
         }
     }
 
     IEnumerator MakeXRayCor()
     {
-        while (ditherMaterial.GetFloat("Vector1_6D76C118") < .95)
+        while (ditherMaterial.GetFloat("_AlphaTreshold") < .95)
         {
 
-            if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+            if (ditherMaterial.HasProperty("_AlphaTreshold"))
             {
-                float a = ditherMaterial.GetFloat("Vector1_6D76C118");
-                ditherMaterial.SetFloat("Vector1_6D76C118", Mathf.Lerp(a, 1, Time.deltaTime * 3));
+                float a = ditherMaterial.GetFloat("_AlphaTreshold");
+                ditherMaterial.SetFloat("_AlphaTreshold", Mathf.Lerp(a, 1, Time.deltaTime * 3));
             }
 
             yield return null;
         }
 
 
-        if (ditherMaterial.HasProperty("Vector1_6D76C118"))
+        if (ditherMaterial.HasProperty("_AlphaTreshold"))
         {
-            ditherMaterial.SetFloat("Vector1_6D76C118", 0);
+            ditherMaterial.SetFloat("_AlphaTreshold", 0);
         }
     }
 
