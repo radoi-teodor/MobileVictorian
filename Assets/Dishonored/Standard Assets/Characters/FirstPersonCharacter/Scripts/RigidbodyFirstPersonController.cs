@@ -19,10 +19,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float JumpForce = 30f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
+            [HideInInspector] public MotionCore m_MotionCore;
 
-#if !MOBILE_INPUT
             private bool m_Running;
-#endif
 
             public void UpdateDesiredTargetSpeed(Vector2 input)
             {
@@ -43,8 +42,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 					//handled last as if strafing and moving forward at the same time forwards speed should take precedence
 					CurrentTargetSpeed = ForwardSpeed;
 				}
-#if !MOBILE_INPUT
-	            if (ControlFreak2.CF2Input.GetKey(RunKey))
+
+	            if (ControlFreak2.CF2Input.GetKey(RunKey) && m_MotionCore.canUseAbilities)
 	            {
 		            CurrentTargetSpeed *= RunMultiplier;
 		            m_Running = true;
@@ -53,15 +52,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
 	            {
 		            m_Running = false;
 	            }
-#endif
+
             }
 
-#if !MOBILE_INPUT
             public bool Running
             {
                 get { return m_Running; }
             }
-#endif
+
         }
 
 
@@ -85,6 +83,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
+        private MotionCore m_MotionCore;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
@@ -109,11 +108,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             get
             {
- #if !MOBILE_INPUT
 				return movementSettings.Running;
-#else
-	            return false;
-#endif
             }
         }
 
@@ -122,6 +117,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
+            m_MotionCore = GetComponent<MotionCore>();
+
+            movementSettings.m_MotionCore = m_MotionCore;
+
             mouseLook.Init (transform, cam.transform);
         }
 
@@ -130,7 +129,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             RotateView();
 
-            if (ControlFreak2.CF2Input.GetButtonDown("Jump") && !m_Jump)
+            if (ControlFreak2.CF2Input.GetButtonDown("Jump") && !m_Jump && m_MotionCore.canUseAbilities)
             {
                 m_Jump = true;
             }

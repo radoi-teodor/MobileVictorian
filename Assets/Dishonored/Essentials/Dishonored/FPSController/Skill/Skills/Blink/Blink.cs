@@ -30,9 +30,9 @@ public class Blink : SkillBase
 
     public override void CancelPower()
     {
+        StopAllCoroutines();
         if (helperGO)
         {
-            StopAllCoroutines();
             Destroy(helperGO);
         }
     }

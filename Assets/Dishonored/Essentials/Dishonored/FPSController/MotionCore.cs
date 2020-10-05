@@ -18,6 +18,8 @@ public class MotionCore : MonoBehaviour {
     public bool hasGun = true;
     public bool hasCrossbow = true;
     [Space]
+    public bool canUseAbilities = true;
+    [Space]
     public List<SkillBase> skills = new List<SkillBase>();
 
     
@@ -34,6 +36,7 @@ public class MotionCore : MonoBehaviour {
     public GameObject sword;
     public GameObject gun;
     public GameObject crossbow;
+    public LayerMask raycastLayerMask;
 
     [Space]
     [Space]
@@ -102,6 +105,7 @@ public class MotionCore : MonoBehaviour {
     [Header("Mobile UI")]
     public GameObject useButton;
     public List<GameObject> hideWhenAbilityMenuShown = new List<GameObject>();
+    public List<GameObject> abilitiesButtons = new List<GameObject>();
 
     /// <summary>
     /// Private variables
@@ -141,7 +145,11 @@ public class MotionCore : MonoBehaviour {
     GameObject bobCam;
     WeaponCore gunWeapon, swordWeapon, crossbowWeapon;
 
-    Vignette vignette;
+
+    public bool settingVignette = false;
+
+    [HideInInspector]
+    public Vignette vignette;
     ColorAdjustments colorGrading;
 
     [HideInInspector]
@@ -211,6 +219,8 @@ public class MotionCore : MonoBehaviour {
         hasSwordMemory = hasSword;
         hasCrossbowMemory = hasCrossbow;
         skillCount = skills.Count;
+
+        settingVignette = false;
 
         RefreshSkills();
 
@@ -438,19 +448,26 @@ public class MotionCore : MonoBehaviour {
 
         menuShown = ControlFreak2.CF2Input.GetMouseButton(2);
 
+        if (!canUseAbilities)
+            menuShown = false;
 
         // MOBILE CONTROLS
-        
-        if (ControlFreak2.CF2Input.GetMouseButtonDown(2)) {
-            foreach (GameObject item in hideWhenAbilityMenuShown)
+
+        if (canUseAbilities)
+        {
+            if (ControlFreak2.CF2Input.GetMouseButtonDown(2))
             {
-                item.SetActive(false);
+                foreach (GameObject item in hideWhenAbilityMenuShown)
+                {
+                    item.SetActive(false);
+                }
             }
-        }
-        else if(ControlFreak2.CF2Input.GetMouseButtonUp(2)) {
-            foreach (GameObject item in hideWhenAbilityMenuShown)
+            else if (ControlFreak2.CF2Input.GetMouseButtonUp(2))
             {
-                item.SetActive(true);
+                foreach (GameObject item in hideWhenAbilityMenuShown)
+                {
+                    item.SetActive(true);
+                }
             }
         }
         
@@ -516,7 +533,7 @@ public class MotionCore : MonoBehaviour {
 
         menuAnim.SetBool("Shown", menuShown);
 
-        if (ControlFreak2.CF2Input.GetMouseButtonDown(2))
+        if (ControlFreak2.CF2Input.GetMouseButtonDown(2) && canUseAbilities)
         {
             ControlFreak2.CFCursor.visible = true;
             ControlFreak2.CFCursor.lockState = CursorLockMode.None;
@@ -543,7 +560,9 @@ public class MotionCore : MonoBehaviour {
             skillTX.text = skillEquipped!=""?skillEquipped:"None";
         }
 
-        if (ControlFreak2.CF2Input.GetMouseButtonUp(2) || (!GameManager.instance.paused && ControlFreak2.CF2Input.GetKeyDown(GameManager.instance.pauseKey)))
+        if ((ControlFreak2.CF2Input.GetMouseButtonUp(2) || 
+           (!GameManager.instance.paused && ControlFreak2.CF2Input.GetKeyDown(GameManager.instance.pauseKey)))
+           && canUseAbilities)
         {
             ControlFreak2.CFCursor.visible = false;
             ControlFreak2.CFCursor.lockState = CursorLockMode.Locked;
@@ -571,7 +590,7 @@ public class MotionCore : MonoBehaviour {
             }
         }
 
-        if (!hurt)
+        if (!hurt && canUseAbilities)
         {
             if (ControlFreak2.CF2Input.GetMouseButtonDown(0) && !rightEquiped && hasSword)
             {
@@ -621,7 +640,7 @@ public class MotionCore : MonoBehaviour {
             skillCooldown -= deltaTime;
         }
 
-        if (!hurt)
+        if (!hurt && canUseAbilities)
         {
             if (ControlFreak2.CF2Input.GetMouseButtonDown(1) && !leftEquiped && (hasGun || (skillEquipped != "Gun" && activeSkill)))
             {
@@ -655,7 +674,7 @@ public class MotionCore : MonoBehaviour {
             }
         }
 
-        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.LeftControl) && rightEquiped)
+        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.LeftControl) && rightEquiped && canUseAbilities)
         {
             blockTimer = 0;
             blockTimer += deltaTime;
@@ -687,29 +706,18 @@ public class MotionCore : MonoBehaviour {
             blockTimer = 0;
         }
 
-        if ((leftEquiped || rightEquiped) && ControlFreak2.CF2Input.GetKey(KeyCode.F) && !hurt)
+        if ((leftEquiped || rightEquiped) && ControlFreak2.CF2Input.GetKey(KeyCode.F) && !hurt && canUseAbilities)
         {
             holdF += deltaTime;
         }
 
-        if (holdF > .75f || ControlFreak2.CF2Input.GetKeyDown(KeyCode.X))
+        if (holdF > .75f || ControlFreak2.CF2Input.GetKeyDown(KeyCode.X) && canUseAbilities)
         {
-            if (rightEquiped)
-            {
-                handsCharAnim.SetBool("RightEquiped", false);
-            }
-
-            if (leftEquiped)
-            {
-                handsCharAnim.SetBool("LeftEquiped", false);
-            }
-
-            rightEquiped = false;
-            leftEquiped = false;
+            UnequipAll();
             holdF = 0f;
         }
 
-        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.C) && !hurt)
+        if (ControlFreak2.CF2Input.GetKeyDown(KeyCode.C) && !hurt && canUseAbilities)
         {
             crouched = !crouched;
             CrouchSet();
@@ -755,12 +763,12 @@ public class MotionCore : MonoBehaviour {
         }
 
         handsCharAnim.SetFloat("Move", ControlFreak2.CF2Input.GetAxis("Vertical"));
-        handsCharAnim.SetBool("Running", ControlFreak2.CF2Input.GetKey(KeyCode.LeftShift));
-        handsCharAnim.SetBool("Crouched", crouched);
+        handsCharAnim.SetBool("Running", canUseAbilities ? ControlFreak2.CF2Input.GetKey(KeyCode.LeftShift) : false);
+        handsCharAnim.SetBool("Crouched", canUseAbilities ? crouched : false);
 
         if (crouched)
         {
-            if(GetVignette() < .4f)
+            if(GetVignette() < .4f && !settingVignette)
             {
                 SetVignette(Mathf.Lerp(GetVignette(), .5f, deltaTime * 5));
             }
@@ -778,7 +786,7 @@ public class MotionCore : MonoBehaviour {
         }
         else
         {
-            if (GetVignette() > .05f)
+            if (GetVignette() > .05f && !settingVignette)
             {
                 SetVignette(Mathf.Lerp(GetVignette(), 0, deltaTime * 5));
             }
@@ -823,7 +831,7 @@ public class MotionCore : MonoBehaviour {
         bool useButtonActive = false;
 
         RaycastHit hit;
-        if (Physics.Raycast(bobCamComp.ViewportPointToRay(new Vector3(.5f, .5f, 0)), out hit, 3.5f))
+        if (Physics.Raycast(bobCamComp.ViewportPointToRay(new Vector3(.5f, .5f, 0)), out hit, 3.5f, raycastLayerMask))
         {
 
 
@@ -909,6 +917,22 @@ public class MotionCore : MonoBehaviour {
         mana = Mathf.Lerp(mana, manaFuture, Time.deltaTime / 5);
     }
 
+    public void UnequipAll()
+    {
+        if (rightEquiped)
+        {
+            handsCharAnim.SetBool("RightEquiped", false);
+        }
+
+        if (leftEquiped)
+        {
+            handsCharAnim.SetBool("LeftEquiped", false);
+        }
+
+        rightEquiped = false;
+        leftEquiped = false;
+    }
+
     public void CrouchSet()
     {
         if (crouched)
@@ -932,9 +956,14 @@ public class MotionCore : MonoBehaviour {
         weapon.transform.localRotation = temp_q;
     }
 
-    void SetVignette(float amount)
+    public void SetVignette(float amount)
     {
         vignette.intensity.value = amount;
+    }
+
+    public void SetVignetteCenter(Vector2 center)
+    {
+        vignette.center.value = center;
     }
 
     float GetVignette()
@@ -1228,6 +1257,22 @@ public class MotionCore : MonoBehaviour {
 
         StartCoroutine(reequip());        
 
+    }
+
+    public void hideAbilitiesButtons()
+    {
+        foreach (GameObject item in abilitiesButtons)
+        {
+            item.SetActive(false);
+        }
+    }
+
+    public void showAbilitiesButtons()
+    {
+        foreach (GameObject item in abilitiesButtons)
+        {
+            item.SetActive(true);
+        }
     }
 
     public void ChangeSkillUI(string skill)

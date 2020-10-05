@@ -1,5 +1,63 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &436925103870277415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 988423531886863197}
+  - component: {fileID: 4530914108662453396}
+  m_Layer: 0
+  m_Name: Possession
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &988423531886863197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436925103870277415}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3906136933835385187}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4530914108662453396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436925103870277415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12bff4cb6fb27ec458bbacfc2a2fc59b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 60f2bd57997443c45ae5e98c3a0609bd, type: 3}
+  powerName: Possession
+  isHoldable: 1
+  isUpgraded: 0
+  manaCost: 50
+  helper: {fileID: 3984025389211669451, guid: 3811599aed58f4a45a29c19ad3371963, type: 3}
+  skillAudio: {fileID: 8300000, guid: f98f6357bae130b489ad1ab7a7ae0cf6, type: 3}
+  owner: {fileID: 0}
+  range: 7
+  powerLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  duration: 30
+  upgradedDuration: 50
+  possessionEndAudio: {fileID: 8300000, guid: a9cbd92fa95970b4e942ffe57545d72d, type: 3}
 --- !u!1 &3907026169615302051
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,6 +219,7 @@ GameObject:
   - component: {fileID: 3923714405658018489}
   - component: {fileID: 3970669698850538595}
   - component: {fileID: 3907751451930664168}
+  - component: {fileID: 3461637088202242416}
   m_Layer: 0
   m_Name: AcrobaticsCam
   m_TagString: Untagged
@@ -265,6 +324,23 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &3461637088202242416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3907075054011761807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: b29e1ffe33c929a47bdf13f0b9f79a6b, type: 2}
 --- !u!1 &3907113692514584643
 GameObject:
   m_ObjectHideFlags: 0
@@ -9178,7 +9254,7 @@ MonoBehaviour:
   helper: {fileID: 0}
   skillAudio: {fileID: 8300000, guid: d0befb053dd8dbe468f580d89e1b782b, type: 3}
   owner: {fileID: 0}
-  duration: 5
+  duration: 50
   endAudio: {fileID: 8300000, guid: ada6d19b1f538bf49800dc7df3a8c2a1, type: 3}
 --- !u!1 &3908850090122054155
 GameObject:
@@ -9869,8 +9945,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3909027792352633839}
-  m_LocalRotation: {x: -0, y: -0.70710635, z: -0, w: 0.70710725}
-  m_LocalPosition: {x: 12.65, y: 1.5, z: 21.49}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3907751450960810649}
@@ -9884,7 +9960,7 @@ Transform:
   - {fileID: 3906136933835385187}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3961806206845494785
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9983,6 +10059,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     CurrentTargetSpeed: 8
+    m_MotionCore: {fileID: 0}
   mouseLook:
     XSensitivity: 2
     YSensitivity: 2
@@ -10013,11 +10090,13 @@ MonoBehaviour:
   hasSword: 1
   hasGun: 1
   hasCrossbow: 1
+  canUseAbilities: 1
   skills:
   - {fileID: 4011959835749381863}
   - {fileID: 4011720841001252179}
   - {fileID: 4011812544673338365}
   - {fileID: 4011586872959011283}
+  - {fileID: 4530914108662453396}
   handsCharAnim: {fileID: 5895133151746831371}
   mainCamAnim: {fileID: 3992827707551025481}
   rightHandPoint: {fileID: 5895133151754111349}
@@ -10025,6 +10104,9 @@ MonoBehaviour:
   sword: {fileID: 3909073147113199509}
   gun: {fileID: 3908511648455821233}
   crossbow: {fileID: 3907115326461261377}
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 1335
   acrobaticsPivot: {fileID: 3908820523112567907}
   acrobaticsCamera: {fileID: 3923714405658018489}
   normalCapsule: {fileID: 4024230876226414183}
@@ -10075,11 +10157,22 @@ MonoBehaviour:
   - {fileID: 3907751452430619774}
   - {fileID: 3907751452707269614}
   - {fileID: 3907751451973268542}
+  abilitiesButtons:
+  - {fileID: 3907751452351654049}
+  - {fileID: 3907751452059532233}
+  - {fileID: 3907751452707269614}
+  - {fileID: 3907751452232821260}
+  - {fileID: 3907751452092043617}
+  - {fileID: 3907751451438609870}
+  - {fileID: 3907751452043367627}
+  - {fileID: 3907751451973268542}
   health: 100
   mana: 100
   skillEquipped: Gun
   audioGeneral: {fileID: 0}
   controller: {fileID: 0}
+  settingVignette: 0
+  vignette: {fileID: 0}
   bobCamComp: {fileID: 0}
   missionPoint: {fileID: 0}
 --- !u!95 &3992891066523064131
@@ -10132,6 +10225,7 @@ Transform:
   - {fileID: 3902941466917188637}
   - {fileID: 3906241142029480475}
   - {fileID: 3903224676858725509}
+  - {fileID: 988423531886863197}
   m_Father: {fileID: 3905857405910924973}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

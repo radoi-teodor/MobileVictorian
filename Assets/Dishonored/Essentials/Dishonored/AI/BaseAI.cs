@@ -79,6 +79,7 @@ public class BaseAI : MonoBehaviour {
     bool velocityTook = false, velocityUsed = false;
 
     bool wasKinematic = false, usedGravity = true;
+    bool sick = false;
 
     int pathIndex = 0;
     Vector3[] helperPoints = null;
@@ -201,7 +202,7 @@ public class BaseAI : MonoBehaviour {
                 GameManager.instance.RestartLevel();
             }
         }
-        if (!dead)
+        if (!dead && !sick)
         {
             if (evil)
             {
@@ -528,6 +529,17 @@ public class BaseAI : MonoBehaviour {
     public void ResetHurtBool()
     {
         anim.SetBool("Hurt", false);
+    }
+
+    public void MakeSick()
+    {
+        sick = true;
+        anim.SetTrigger("Sick");
+    }
+
+    public void ResetSick()
+    {
+        sick = false;
     }
 
     public GameObject Assasinate()
